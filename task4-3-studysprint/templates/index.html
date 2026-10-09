@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>StudySprint | Student Study Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6c63ff;
+            --primary-dark: #554fd8;
+            --secondary: #8b85ff;
+            --background: #f5f6fb;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --border: #e7e9f2;
+            --success-bg: #eaf8ef;
+            --success-text: #23824c;
+            --soft-purple: #f0efff;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        header {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--secondary)
+            );
+
+            color: white;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .brand-text h2 {
+            font-size: 21px;
+        }
+
+        .brand-text p {
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .status-badge {
+            background: var(--success-bg);
+            color: var(--success-text);
+
+            padding: 8px 14px;
+            border-radius: 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 25px;
+        }
+
+        .hero {
+            background: linear-gradient(
+                135deg,
+                #625bf6,
+                #8b85ff
+            );
+
+            color: white;
+
+            border-radius: 22px;
+            padding: 42px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 30px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(108, 99, 255, 0.18);
+        }
+
+        .hero-content {
+            max-width: 680px;
+        }
+
+        .hero-label {
+            display: inline-block;
+
+            background:
+                rgba(255, 255, 255, 0.16);
+
+            padding: 7px 12px;
+            border-radius: 15px;
+
+            margin-bottom: 16px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 13px;
+        }
+
+        .hero p {
+            line-height: 1.7;
+
+            color:
+                rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-circle {
+            min-width: 130px;
+            height: 130px;
+
+            border-radius: 50%;
+
+            border:
+                8px solid
+                rgba(255, 255, 255, 0.28);
+
+            background:
+                rgba(255, 255, 255, 0.1);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-circle strong {
+            font-size: 30px;
+        }
+
+        .hero-circle span {
+            margin-top: 4px;
+            font-size: 12px;
+        }
+
+        .section-heading {
+            margin-top: 35px;
+            margin-bottom: 18px;
+        }
+
+        .section-heading h2 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .planner-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                minmax(0, 1fr);
+
+            gap: 20px;
+            align-items: start;
+        }
+
+        .card {
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 26px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(31, 41, 55, 0.05);
+        }
+
+        .planner-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .intro {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-top: 16px;
+            margin-bottom: 7px;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            border:
+                1px solid #d8dbe8;
+
+            border-radius: 9px;
+
+            background: white;
+
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+
+            border-color:
+                var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(108, 99, 255, 0.1);
+        }
+
+        button {
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 13px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--secondary)
+            );
+
+            color: white;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: linear-gradient(
+                135deg,
+                var(--primary-dark),
+                var(--primary)
+            );
+        }
+
+        .empty-plan {
+            min-height: 320px;
+
+            background:
+                var(--soft-purple);
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            color:
+                var(--primary);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 24px;
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+        .empty-plan h3 {
+            margin-bottom: 8px;
+        }
+
+        .empty-plan p {
+            max-width: 330px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .generated-plan {
+            border-top:
+                5px solid
+                var(--primary);
+        }
+
+        .plan-badge {
+            display: inline-block;
+
+            background:
+                var(--soft-purple);
+
+            color:
+                var(--primary);
+
+            padding: 6px 11px;
+            border-radius: 14px;
+
+            margin-bottom: 14px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .generated-plan h2 {
+            margin-bottom: 7px;
+        }
+
+        .topic {
+            color:
+                var(--primary);
+
+            font-size: 14px;
+            font-weight: bold;
+
+            margin-bottom: 12px;
+        }
+
+        .plan-description {
+            color:
+                var(--muted);
+
+            line-height: 1.6;
+
+            font-size: 14px;
+
+            margin-bottom: 18px;
+        }
+
+        .steps {
+            list-style-position: inside;
+        }
+
+        .steps li {
+            padding: 11px 0;
+
+            border-bottom:
+                1px solid
+                var(--border);
+
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .steps li:last-child {
+            border-bottom: none;
+        }
+
+        .success-message {
+            margin-top: 18px;
+
+            padding: 13px;
+
+            border-radius: 9px;
+
+            background:
+                var(--success-bg);
+
+            color:
+                var(--success-text);
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .dashboard {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .feature-number {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 11px;
+
+            background:
+                var(--soft-purple);
+
+            color:
+                var(--primary);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-weight: bold;
+
+            margin-bottom: 16px;
+        }
+
+        .card-label {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+        .card-value {
+            font-size: 23px;
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        .card-note {
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        .deployment {
+            margin-top: 22px;
+
+            padding: 17px;
+
+            background:
+                var(--success-bg);
+
+            border:
+                1px solid #d7efdf;
+
+            border-radius: 12px;
+        }
+
+        .deployment strong {
+            display: block;
+
+            color:
+                var(--success-text);
+
+            margin-bottom: 5px;
+        }
+
+        .deployment p {
+            color: #4d6f5a;
+            font-size: 12px;
+        }
+
+        footer {
+            text-align: center;
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+            padding: 35px 20px 25px;
+        }
+
+        @media (max-width: 850px) {
+
+            .planner-grid,
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<header>
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            S
+        </div>
+
+        <div class="brand-text">
+            <h2>StudySprint</h2>
+            <p>Student Study Dashboard</p>
+        </div>
+
+    </div>
+
+    <div class="status-badge">
+        ● System Online
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <span class="hero-label">
+                SWE40006 • DEPLOYMENT PORTFOLIO
+            </span>
+
+            <h1>
+                Plan a smarter study sprint.
+            </h1>
+
+            <p>
+                Enter a study topic and choose a learning mode.
+                StudySprint will process the request using Flask
+                and dynamically create a structured study plan.
+            </p>
+
+        </div>
+
+        <div class="hero-circle">
+
+            <strong>3</strong>
+
+            <span>
+                Study Modes
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <div class="section-heading">
+
+        <h2>
+            Study Plan Generator
+        </h2>
+
+        <p>
+            Create a personalised plan for the next study session.
+        </p>
+
+    </div>
+
+
+    <section class="planner-grid">
+
+        <div class="card planner-card">
+
+            <h3>
+                Create a Study Plan
+            </h3>
+
+            <p class="intro">
+                Enter a study topic and select the learning
+                approach that best matches the session.
+            </p>
+
+
+            <form method="POST" action="/">
+
+                <label for="subject">
+                    Study Topic
+                </label>
+
+                <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="Example: Docker Deployment"
+                    value="{{ subject }}"
+                    required
+                >
+
+
+                <label for="mode">
+                    Study Mode
+                </label>
+
+                <select
+                    id="mode"
+                    name="mode"
+                >
+
+                    {% for key, mode in modes.items() %}
+
+                    <option
+                        value="{{ key }}"
+                        {% if key == selected_mode %}
+                        selected
+                        {% endif %}
+                    >
+                        {{ mode.title }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <button type="submit">
+                    Generate Study Plan
+                </button>
+
+            </form>
+
+        </div>
+
+
+        {% if plan %}
+
+        <div class="card generated-plan">
+
+            <span class="plan-badge">
+                PLAN GENERATED
+            </span>
+
+            <h2>
+                {{ plan.title }}
+            </h2>
+
+            <p class="topic">
+                Topic: {{ subject }}
+            </p>
+
+            <p class="plan-description">
+                {{ plan.description }}
+            </p>
+
+
+            <ol class="steps">
+
+                {% for step in plan.steps %}
+
+                <li>
+                    {{ step }}
+                </li>
+
+                {% endfor %}
+
+            </ol>
+
+
+            <div class="success-message">
+                ✓ StudySprint generated this plan successfully.
+            </div>
+
+        </div>
+
+
+        {% else %}
+
+
+        <div class="card empty-plan">
+
+            <div class="empty-icon">
+                S
+            </div>
+
+            <h3>
+                Your study plan will appear here
+            </h3>
+
+            <p>
+                Enter a topic and select one of the three
+                study modes to generate a structured session.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <div class="section-heading">
+
+        <h2>
+            Application Workflow
+        </h2>
+
+        <p>
+            How StudySprint processes a user request.
+        </p>
+
+    </div>
+
+
+    <section class="dashboard">
+
+        <div class="card">
+
+            <div class="feature-number">
+                1
+            </div>
+
+            <p class="card-label">
+                User Input
+            </p>
+
+            <div class="card-value">
+                Topic
+            </div>
+
+            <p class="card-note">
+                A study subject is entered through the web form.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="feature-number">
+                2
+            </div>
+
+            <p class="card-label">
+                Server Processing
+            </p>
+
+            <div class="card-value">
+                Flask
+            </div>
+
+            <p class="card-note">
+                Python processes the selected study mode.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="feature-number">
+                3
+            </div>
+
+            <p class="card-label">
+                Dynamic Output
+            </p>
+
+            <div class="card-value">
+                Study Plan
+            </div>
+
+            <p class="card-note">
+                Jinja renders the selected plan in the browser.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <div class="deployment">
+
+        <strong>
+            ✓ Docker Deployment Ready
+        </strong>
+
+        <p>
+            StudySprint is packaged as a Flask web application
+            for container deployment in SWE40006 Task 4.3.
+        </p>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    StudySprint • SWE40006 Software Deployment and Evolution
+
+    <br>
+
+    Deployment Portfolio Task 4.3
+
+</footer>
+
+
+</body>
+
+</html>
